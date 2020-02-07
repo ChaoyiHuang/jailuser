@@ -53,7 +53,7 @@ def jail_bash(name):
 def enable_bash_color(name):
     # os.system("sudo cp -v ~/.bashrc /home"+name+"/home/"+name+"/")
     # os.system("sudo chown "+name+":"+name+" /home/"+name+"/home/"+name+"/.bashrc")
-    os.system("sudo cp -v /usr/bin/dircolors /home"+name+"/usr/bin/")
+    os.system("sudo cp -v /usr/bin/dircolors /home/"+name+"/usr/bin/")
     file_name = "/home/"+name+"/home/"+name+"/.bashrc"
     with open(file_name, "w") as bashrc_file:
         bashrc_file.write("alias ls='ls --color=auto'\n")
@@ -133,7 +133,7 @@ def append_user_sshd(name):
 
     #append new user to jailed folder
     with open("/etc/ssh/sshd_config", "a") as myfile:
-        myfile.write("Match User "+name+"\n")
+        myfile.write("\nMatch User "+name+"\n")
         myfile.write("        X11Forwarding yes\n")
         myfile.write("        AllowTcpForwarding yes\n")
         myfile.write("        PermitTTY yes\n")
