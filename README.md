@@ -5,7 +5,9 @@ Just for fun, no clean code here
 # jailuser
 
  cd ~
+ 
  wget https://github.com/ChaoyiHuang/jailuser/blob/master/jailuser.py
+ 
  wget https://olivier.sessink.nl/jailkit/jailkit-2.21.tar.gz
  
  tar xzvf jailkit-2.21.tar.gz
