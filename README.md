@@ -1,3 +1,7 @@
+Ensure SSH user can only work in his own folder. 
+
+Just for fun, no clean code here
+
 # jailuser
 
  wget https://olivier.sessink.nl/jailkit/jailkit-2.21.tar.gz
