@@ -4,3 +4,27 @@ ifconfig virbr0 172.20.0.1
 
 
 qemu-system-x86_64 -append netdev.ip=172.20.0.2/24:172.20.0.1:::: -- /redis.conf  -cpu host,+x2apic,-pmu -daemonize -device virtio-net-pci,mac=02:b0:b0:1c:44:01,netdev=hostnet0 -device pvpanic -device sga -display none -enable-kvm -kernel /home/joehuang_sweden/catalog/library/redis/7.0/.unikraft/build/redis_qemu-x86_64 -machine pc,accel=kvm -m size=1953M -monitor unix:/root/.local/share/kraftkit/runtime/9941dff1-4605-4899-9674-a407799a00d7/qemu_mon.sock,server,nowait -name 9941dff1-4605-4899-9674-a407799a00d7 -netdev tap,id=hostnet0,ifname=virbr0@if10,script=no,downscript=no -nographic -no-reboot -S -parallel none -pidfile /root/.local/share/kraftkit/runtime/9941dff1-4605-4899-9674-a407799a00d7/machine.pid -qmp unix:/root/.local/share/kraftkit/runtime/9941dff1-4605-4899-9674-a407799a00d7/qemu_control.sock,server,nowait -qmp unix:/root/.local/share/kraftkit/runtime/9941dff1-4605-4899-9674-a407799a00d7/qemu_events.sock,server,nowait -rtc base=utc -serial file:/root/.local/share/kraftkit/runtime/9941dff1-4605-4899-9674-a407799a00d7/machine.log -smp cpus=1,threads=1,sockets=1 -vga none
+
+
+ip tuntap add mode tap virbr0
+ip addr add 172.44.0.1/24 virbr0
+ip addr add 172.44.0.1/24 dev virbr0
+tc qdisc add dev virbr0 root netem delay 0ms
+ip link set virbr0 up
+echo 1 > /proc/sys/net/ipv4/conf/virbr0/proxy_arp
+udo iptables -I FORWARD 1 -i virbr0 -j ACCEPT
+iptables -I FORWARD 1 -i virbr0 -j ACCEPT
+iptables -I FORWARD 1 -o virbr0 -m state --state RELATED,ESTABLISHED -j ACCEPT
+history | grep virbr0
+brctl addbr virbr0 || true
+brctl addbr virbr0 || true
+brctl delbr virbr0
+brctl addbr virbr0 || true
+tc qdisc add dev virbr0 root netem delay 0ms
+ifconfig virbr0 172.20.0.1
+ifconfig virbr0 172.20.0.1
+kraft run --network virbr0:172.20.0.2/24:172.22.0.1  -M 2048M
+brctl showmacs virbr0
+brctl showmacs virbr0 | grep grep 02:b0:b0:6c:ea:01
+brctl showmacs virbr0 | grep 02:b0:b0:6c:ea:01
+kraft run --network virbr0:172.20.0.2/24:172.22.0.1  -M 2048M
