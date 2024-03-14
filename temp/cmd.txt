@@ -28,3 +28,5 @@ brctl showmacs virbr0
 brctl showmacs virbr0 | grep grep 02:b0:b0:6c:ea:01
 brctl showmacs virbr0 | grep 02:b0:b0:6c:ea:01
 kraft run --network virbr0:172.20.0.2/24:172.22.0.1  -M 2048M
+
+kraft run --network virbr0:172.20.0.5/172.20.0.1:24 --qemu /usr/bin/qemu-kvm -M 2048M /home/joe/unikraft/redis_qemu-x86_64
